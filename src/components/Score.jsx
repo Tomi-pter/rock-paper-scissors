@@ -1,4 +1,5 @@
 import styled from "styled-components/macro";
+import gameLogo from "../images/logo.svg";
 
 const ScoreDiv = styled.div`
   display: flex;
@@ -9,7 +10,7 @@ const ScoreDiv = styled.div`
   padding: 1rem;
   border-radius: 0.5rem;
   color: white;
-  margin: 2rem 20%;
+  margin: 3rem 20%;
 `;
 const ScoreCard = styled.div`
   background-color: white;
@@ -21,7 +22,11 @@ const ScoreCard = styled.div`
   span {
     display: block;
     color: var(--dark-text);
-    font-size: 2.5rem;
+    font-size: 4rem;
+    margin-top: -0.5rem;
+  }
+  p {
+    margin: 0;
   }
 `;
 
@@ -29,9 +34,7 @@ function Score() {
   return (
     <ScoreDiv>
       <div>
-        <p>ROCK</p>
-        <p>PAPER</p>
-        <p>SCISSORS</p>
+        <img src={gameLogo} alt="logo" />
       </div>
       <ScoreCard>
         <p>
@@ -43,3 +46,4 @@ function Score() {
 }
 
 export default Score;
+export { ScoreDiv };
