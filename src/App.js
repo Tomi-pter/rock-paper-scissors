@@ -1,8 +1,13 @@
-import logo from "./logo.svg";
-import "./App.css";
+import Score from "./components/Score";
+import Game from "./components/Game";
 
 function App() {
-  return <></>;
+  return (
+    <>
+      <Score />
+      <Game />
+    </>
+  );
 }
 
 export default App;
