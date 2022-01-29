@@ -1,15 +1,41 @@
 import { useState } from "react";
+import styled from "styled-components/macro";
 import Score from "./components/Score";
 import Game from "./components/Game";
 import Rules from "./components/Rules";
 
+const ResetDiv = styled.div`
+  display: flex;
+  margin: 1rem 0.5rem 1rem 0;
+  justify-content: center;
+`;
+
+const ResetBtn = styled.button`
+  background-color: rgb(255, 255, 255, 0);
+  padding: 0.5rem 2rem;
+  color: white;
+  border: 1px solid white;
+  border-radius: 0.35rem;
+  font-family: "BSB";
+  display: block;
+  text-transform: uppercase;
+`;
+
 function App() {
   const [score, setScore] = useState(0);
+
+  const resetGame = () => {
+    window.location.reload();
+    return false;
+  };
 
   return (
     <>
       <Score score={score} setScore={setScore} />
       <Game score={score} setScore={setScore} />
+      <ResetDiv>
+        <ResetBtn onClick={resetGame}>Reset</ResetBtn>
+      </ResetDiv>
       <Rules />
     </>
   );

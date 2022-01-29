@@ -85,6 +85,23 @@ const GameOuterActive = styled.div`
     text-transform: uppercase;
     font-size: 3rem;
   }
+
+  @media screen and (max-width: 1024px) {
+    max-width: 80%;
+    height: 30vh;
+    margin: auto;
+
+    & p {
+      font-size: 0.8rem;
+    }
+    & .outcome {
+      margin: 0 0.5rem;
+    }
+
+    & .outcome > p {
+      font-size: 1rem;
+    }
+  }
 `;
 
 const OutcomeBtn = styled.button`
@@ -96,6 +113,10 @@ const OutcomeBtn = styled.button`
   border-radius: 0.25rem;
   font-family: "BB";
   border: 1px solid white;
+
+  @media screen and (max-width: 1024px) {
+    width: 100%;
+  }
 `;
 
 function Game({ score, setScore }) {
@@ -161,13 +182,13 @@ function Game({ score, setScore }) {
   };
 
   if (scoreRef.current === "Stalemate") {
-    setScore(dispNum);
+    setScore(+dispNum);
     totalRef.current = score;
   } else if (scoreRef.current === "You win") {
-    setScore(dispNum + 1);
+    setScore(+dispNum + 1);
     totalRef.current = score;
   } else if (scoreRef.current === "You lose") {
-    setScore(dispNum - 1);
+    setScore(+dispNum - 1);
     totalRef.current = score;
   }
 
