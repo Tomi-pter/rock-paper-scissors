@@ -16,11 +16,17 @@ const BtnDiv = styled.div`
 const RulesBtn = styled.button`
   background-color: rgb(255, 255, 255, 0);
   padding: 0.5rem 2rem;
-  margin: 1rem 0;
   color: white;
   border: 1px solid white;
   border-radius: 0.35rem;
   font-family: "BSB";
+  display: block;
+
+  &.clicked {
+    display: none;
+    height: 0;
+    width: 0;
+  }
 `;
 
 const RulesImg = styled.div`
@@ -29,8 +35,7 @@ const RulesImg = styled.div`
   width: fit-content;
   height: auto;
   background-color: white;
-  margin: 0 auto;
-  top: 25vh;
+  margin: 10% auto 0;
   transform: translateY(-175%);
   padding: 0 2rem 1rem;
   border-radius: 0.5rem;
@@ -56,23 +61,49 @@ const RulesImg = styled.div`
     max-width: 15rem;
     margin: auto;
   }
+
+  @media screen and (max-height: 850px) {
+    margin: 50vh auto 0;
+  }
+`;
+
+const Dim = styled.div`
+  background-color: rgb(0, 0, 0, 0.75);
+  width: 100vw;
+  height: 150vh;
+  z-index: 10;
+  transform: translateX(1%) translateY(-100%);
+  position: fixed;
 `;
 
 function Rules() {
-  const [ruleDisplay, setRuleDisplay] = useState(false);
+  const [ruleDisplay, setRuleDisplay] = useState({
+    clicked: false,
+    class: "",
+  });
 
   const displayRule = () => {
-    setRuleDisplay(true);
+    setRuleDisplay((prevState) => ({
+      ...prevState,
+      clicked: true,
+      class: "clicked",
+    }));
   };
 
   const removeRule = () => {
-    setRuleDisplay(false);
+    setRuleDisplay((prevState) => ({
+      ...prevState,
+      clicked: false,
+      class: "",
+    }));
   };
 
   return (
     <BtnDiv>
-      <RulesBtn onClick={displayRule}>RULES</RulesBtn>
-      {ruleDisplay && (
+      <RulesBtn onClick={displayRule} className={ruleDisplay.class}>
+        RULES
+      </RulesBtn>
+      {ruleDisplay.clicked && (
         <>
           <RulesImg>
             <div className="headClose">
@@ -83,6 +114,7 @@ function Rules() {
             </div>
             <img src={rules} alt="" />
           </RulesImg>
+          <Dim />
         </>
       )}
     </BtnDiv>
