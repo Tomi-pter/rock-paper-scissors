@@ -3,10 +3,20 @@ import rules from "../images/image-rules.svg";
 import closeBtn from "../images/icon-close.svg";
 import { useState } from "react";
 
+const BtnDiv = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin: 1rem 0.5rem 1rem 0;
+
+  @media screen and (max-width: 1024px) {
+    justify-content: center;
+  }
+`;
+
 const RulesBtn = styled.button`
   background-color: rgb(255, 255, 255, 0);
   padding: 0.5rem 2rem;
-  margin: 1rem 0 1rem 90%;
+  margin: 1rem 0;
   color: white;
   border: 1px solid white;
   border-radius: 0.35rem;
@@ -60,7 +70,7 @@ function Rules() {
   };
 
   return (
-    <>
+    <BtnDiv>
       <RulesBtn onClick={displayRule}>RULES</RulesBtn>
       {ruleDisplay && (
         <>
@@ -75,7 +85,7 @@ function Rules() {
           </RulesImg>
         </>
       )}
-    </>
+    </BtnDiv>
   );
 }
 

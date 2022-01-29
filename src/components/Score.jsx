@@ -3,14 +3,22 @@ import gameLogo from "../images/logo.svg";
 
 const ScoreDiv = styled.div`
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   border: 1px solid white;
   font-family: "BB";
   padding: 1rem;
   border-radius: 0.5rem;
   color: white;
   margin: 3rem 20%;
+
+  @media screen and (max-width: 1024px) {
+    margin: 3rem 10%;
+
+    img {
+      max-width: clamp(4rem, 6rem, 9rem);
+    }
+  }
 `;
 const ScoreCard = styled.div`
   background-color: white;
@@ -27,6 +35,14 @@ const ScoreCard = styled.div`
   }
   p {
     margin: 0;
+  }
+
+  @media screen and (max-width: 1024px) {
+    padding: 0.5rem;
+
+    span {
+      font-size: clamp(2rem, 3rem, 4rem);
+    }
   }
 `;
 

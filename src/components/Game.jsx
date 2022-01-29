@@ -7,26 +7,41 @@ import triangle from "../images/bg-triangle.svg";
 
 const GamePiece = styled.button`
   padding: 1.5rem;
-  width: 8rem;
-  height: 8rem;
+  width: 9vw;
+  height: 9vw;
   border-radius: 50%;
   border: 16px solid var(--${(props) => props.color}, transparent);
   box-shadow: inset 0 5px hsl(217, 16%, 45%, 0.5),
     0 5px var(--${(props) => props.color}-shadow);
-  background: url(${(props) => props.bg}) no-repeat center;
+  background: url(${(props) => props.bg}) no-repeat center/3.5vw;
   background-color: white;
 
-  img {
-    margin: auto;
+  @media screen and (max-width: 1024px) {
+    border: 13px solid var(--${(props) => props.color}, transparent);
+    max-width: 25vw;
+    max-height: 25vh;
+    background: url(${(props) => props.bg}) no-repeat center/2rem;
+    background-color: white;
   }
 `;
 
 const GameOuter = styled.div`
   position: relative;
   margin: 3rem auto;
-  width: 30%;
-  height: 25rem;
-  background: url(${triangle}) no-repeat center 75%;
+  max-width: 30%;
+  height: 50vh;
+  background: url(${triangle}) no-repeat center/20vw clamp(30vh, 37vh, 37.2vh);
+
+  @media screen and (max-width: 1024px) {
+    max-width: 60%;
+    height: 30vh;
+    background: url(${triangle}) no-repeat center/clamp(30vw, 55vw, 60vw)
+      clamp(20vh, 25vh, 29vh);
+  }
+
+  //@media screen and (min-width: 451px) and (max-width: 1024px) {
+  //  background: url(${triangle}) no-repeat center/40vw clamp(25vh, 30vh, 33vh);
+  //}
 
   ${GamePiece}:first-child {
     position: absolute;
