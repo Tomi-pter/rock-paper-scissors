@@ -70,9 +70,9 @@ const RulesImg = styled.div`
 const Dim = styled.div`
   background-color: rgb(0, 0, 0, 0.75);
   width: 100vw;
-  height: 150vh;
+  height: 200vh;
   z-index: 10;
-  transform: translateX(1%) translateY(-100%);
+  transform: translateX(1%) translateY(-55%);
   position: fixed;
 `;
 
