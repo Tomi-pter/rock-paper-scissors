@@ -161,7 +161,7 @@ function Game({ score, setScore }) {
   };
 
   if (scoreRef.current === "Stalemate") {
-    setScore(dispNum ? dispNum : 0);
+    setScore(dispNum);
     totalRef.current = score;
   } else if (scoreRef.current === "You win") {
     setScore(dispNum + 1);
