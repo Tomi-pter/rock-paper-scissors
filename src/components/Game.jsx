@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import styled from "styled-components/macro";
 import rock from "../images/icon-rock.svg";
 import paper from "../images/icon-paper.svg";
@@ -50,7 +50,7 @@ const GameOuterActive = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 30%;
+  max-width: 45%;
   margin: 1rem auto;
 
   & p {
@@ -59,45 +59,118 @@ const GameOuterActive = styled.div`
     color: white;
     text-align: center;
   }
+
+  & .outcome {
+    display: flex;
+    flex-direction: column;
+  }
+
+  & .outcome > p {
+    font-family: "BB";
+    text-transform: uppercase;
+    font-size: 3rem;
+  }
 `;
 
-function Game() {
+const OutcomeBtn = styled.button`
+  padding: 0.5rem 3rem;
+  margin: 0.5rem auto;
+  color: var(--dark-text);
+  background-color: white;
+  text-transform: uppercase;
+  border-radius: 0.25rem;
+  font-family: "BB";
+  border: 1px solid white;
+`;
+
+function Game({ score, setScore }) {
   const [active, setActive] = useState(false);
   const [selected, setSelected] = useState({
     class: "",
     id: "",
   });
+  const [no, setNo] = useState(0);
   const [randomP, setRandomP] = useState([]);
+  const [dispNum, setDispNum] = useState(0);
+  const colorRef = useRef("");
+  const bgRef = useRef("");
+  const scoreRef = useRef("");
+  const totalRef = useRef("");
 
   let idArray = [1, 2, 3];
 
+  const randomise = (a, b) => {
+    return Math.floor(Math.random() * (b - a + 1) + a);
+  };
+
   const activeGame = (e) => {
-    setActive(true);
     setSelected((prevState) => ({
       ...prevState,
       class: e.target.className,
       id: e.target.id,
     }));
     setRandomP(randomise(idArray[0], idArray[idArray.length - 1]));
-    console.log(e.target.className);
-  };
-  console.log(randomP);
-
-  const randomise = (a, b) => {
-    return Math.floor(Math.random() * (b - a + 1) + a);
+    setActive(true);
   };
 
-  let randomColor, randomBg;
-  if (randomP === 1) {
-    randomColor = "paper";
-    randomBg = paper;
-  } else if (randomP === 2) {
-    randomColor = "scissors";
-    randomBg = scissors;
-  } else if (randomP === 3) {
-    randomColor = "rock";
-    randomBg = rock;
+  useEffect(() => {
+    if (randomP === 1) {
+      colorRef.current = "paper";
+      bgRef.current = paper;
+      setNo(1);
+    } else if (randomP === 2) {
+      colorRef.current = "scissors";
+      bgRef.current = scissors;
+      setNo(2);
+    } else if (randomP === 3) {
+      colorRef.current = "rock";
+      bgRef.current = rock;
+      setNo(3);
+    }
+  }, [no, randomP, active]);
+
+  const winner = (select, rId) => {
+    let result;
+    if (!rId) {
+      result = "the house is picking...";
+    } else if (select - 1 === rId) {
+      result = "You win";
+    } else if (select - 1 === rId - 1) {
+      result = "Stalemate";
+    } else if (select === 1 && rId === 3) {
+      result = "You win";
+    } else {
+      result = "You lose";
+    }
+    return result;
+  };
+
+  if (scoreRef.current === "Stalemate") {
+    setScore(dispNum);
+    totalRef.current = score;
+  } else if (scoreRef.current === "You win") {
+    setScore(dispNum + 1);
+    totalRef.current = score;
+  } else if (scoreRef.current === "You lose") {
+    setScore(dispNum - 1);
+    totalRef.current = score;
   }
+
+  useEffect(() => {
+    setDispNum(totalRef.current);
+    scoreRef.current = "";
+  }, [active]);
+
+  const playAgain = () => {
+    setActive(false);
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      console.log("the house has picked");
+      console.log(score);
+    }, 0);
+  }, [randomP, selected.id, score]);
 
   return (
     <>
@@ -118,13 +191,18 @@ function Game() {
             <p>YOU PICKED</p>
             <button className={selected.class} id={selected.id}></button>
           </div>
+          <div className="outcome">
+            <p>{(scoreRef.current = winner(+selected.id, no))}</p>
+            <OutcomeBtn onClick={playAgain}>Play again</OutcomeBtn>
+          </div>
           <div>
             <p>THE HOUSE PICKED</p>
             <GamePiece
+              ref={colorRef}
               className="theHouse"
               id={randomP}
-              color={randomColor}
-              bg={randomBg}
+              color={colorRef.current}
+              bg={bgRef.current}
             />
           </div>
         </GameOuterActive>

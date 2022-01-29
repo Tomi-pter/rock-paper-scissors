@@ -1,5 +1,4 @@
 import styled from "styled-components/macro";
-import { useState } from "react";
 import gameLogo from "../images/logo.svg";
 
 const ScoreDiv = styled.div`
@@ -31,9 +30,7 @@ const ScoreCard = styled.div`
   }
 `;
 
-function Score() {
-  const [total, setTotal] = useState(0);
-
+function Score({ score }) {
   return (
     <ScoreDiv>
       <div>
@@ -41,7 +38,7 @@ function Score() {
       </div>
       <ScoreCard>
         <p>
-          SCORE <span>{total}</span>
+          SCORE <span>{score}</span>
         </p>
       </ScoreCard>
     </ScoreDiv>
