@@ -183,14 +183,15 @@ function Game({ score, setScore }) {
 
   if (scoreRef.current === "Stalemate") {
     setScore(+dispNum);
-    totalRef.current = score;
   } else if (scoreRef.current === "You win") {
     setScore(+dispNum + 1);
-    totalRef.current = score;
   } else if (scoreRef.current === "You lose") {
     setScore(+dispNum - 1);
-    totalRef.current = score;
   }
+  useEffect(() => {
+    totalRef.current = score;
+  }, [score]);
+
   const updateScore = () => {
     setDispNum(totalRef.current);
     scoreRef.current = "";
