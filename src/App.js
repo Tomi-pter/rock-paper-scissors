@@ -4,6 +4,15 @@ import Score from "./components/Score";
 import Game from "./components/Game";
 import Rules from "./components/Rules";
 
+//const Heading = styled.h1`
+//  color: white;
+//  font-family: "BB";
+//  font-size: 1.5rem;
+//  text-align: center;
+//  text-transform: uppercase;
+//  margin-bottom: 0.5rem;
+//`;
+
 const ResetDiv = styled.div`
   display: flex;
   margin: 1rem 0.5rem 1rem 0;
@@ -31,6 +40,7 @@ function App() {
 
   return (
     <>
+      {/*<Heading>Single player Rock, Paper, Scissors game</Heading>*/}
       <Score score={score} setScore={setScore} />
       <Game score={score} setScore={setScore} />
       <ResetDiv>

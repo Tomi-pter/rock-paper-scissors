@@ -238,7 +238,11 @@ function Game({ score, setScore }) {
         <GameOuterActive>
           <div>
             <p>YOU PICKED</p>
-            <button className={selected.class} id={selected.id}></button>
+            <button
+              className={selected.class}
+              id={selected.id}
+              disabled
+            ></button>
           </div>
           <div className="outcome">
             <p>{(scoreRef.current = winner(+selected.id, no))}</p>
@@ -250,8 +254,9 @@ function Game({ score, setScore }) {
               ref={colorRef}
               className="theHouse"
               id={randomP}
-              color={colorRef.current}
+              $color={colorRef.current}
               bg={bgRef.current}
+              disabled
             />
           </div>
         </GameOuterActive>

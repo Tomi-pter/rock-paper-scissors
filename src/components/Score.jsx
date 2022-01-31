@@ -33,8 +33,9 @@ const ScoreCard = styled.div`
     font-size: 4rem;
     margin-top: -0.5rem;
   }
-  p {
+  h1 {
     margin: 0;
+    font-size: 1rem;
   }
 
   @media screen and (max-width: 1024px) {
@@ -53,9 +54,9 @@ function Score({ score }) {
         <img src={gameLogo} alt="logo" />
       </div>
       <ScoreCard>
-        <p>
+        <h1>
           SCORE <span>{score}</span>
-        </p>
+        </h1>
       </ScoreCard>
     </ScoreDiv>
   );
