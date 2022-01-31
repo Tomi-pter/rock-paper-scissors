@@ -10,14 +10,19 @@ const GamePiece = styled.button`
   width: 9vw;
   height: 9vw;
   border-radius: 50%;
-  border: 16px solid var(--${(props) => props.color}, transparent);
+  border: 16px solid var(--${(props) => props.$color}, transparent);
   box-shadow: inset 0 5px hsl(217, 16%, 45%, 0.5),
-    0 5px var(--${(props) => props.color}-shadow);
+    0 5px var(--${(props) => props.$color}-shadow);
   background: url(${(props) => props.bg}) no-repeat center/3.5vw;
   background-color: white;
 
+  .hide {
+    visibility: hidden;
+    height: 0;
+    width: 0;
+  }
   @media screen and (max-width: 1024px) {
-    border: 13px solid var(--${(props) => props.color}, transparent);
+    border: 13px solid var(--${(props) => props.$color}, transparent);
     max-width: 25vw;
     max-height: 25vh;
     background: url(${(props) => props.bg}) no-repeat center/2rem;
@@ -213,14 +218,20 @@ function Game({ score, setScore }) {
     <>
       {!active ? (
         <GameOuter>
-          <GamePiece color="paper" bg={paper} id="1" onClick={activeGame} />
+          <GamePiece $color="paper" bg={paper} id="1" onClick={activeGame}>
+            <span className="hide">paper</span>
+          </GamePiece>
           <GamePiece
-            color="scissors"
+            $color="scissors"
             bg={scissors}
             id="2"
             onClick={activeGame}
-          />
-          <GamePiece color="rock" bg={rock} id="3" onClick={activeGame} />
+          >
+            <span className="hide">scissors</span>
+          </GamePiece>
+          <GamePiece $color="rock" bg={rock} id="3" onClick={activeGame}>
+            <span className="hide">rock</span>
+          </GamePiece>
         </GameOuter>
       ) : (
         <GameOuterActive>
