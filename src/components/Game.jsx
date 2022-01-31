@@ -191,14 +191,14 @@ function Game({ score, setScore }) {
     setScore(+dispNum - 1);
     totalRef.current = score;
   }
-
-  useEffect(() => {
+  const updateScore = () => {
     setDispNum(totalRef.current);
     scoreRef.current = "";
-  }, [active]);
+  };
 
   const playAgain = () => {
     setActive(false);
+    updateScore();
   };
 
   useEffect(() => {
