@@ -15,6 +15,7 @@ const GamePiece = styled.button`
     0 5px var(--${(props) => props.$color}-shadow);
   background: url(${(props) => props.bg}) no-repeat center/3.5vw;
   background-color: white;
+  color: transparent;
 
   .hide {
     visibility: hidden;
@@ -219,7 +220,7 @@ function Game({ score, setScore }) {
       {!active ? (
         <GameOuter>
           <GamePiece $color="paper" bg={paper} id="1" onClick={activeGame}>
-            <span className="hide">paper</span>
+            paper
           </GamePiece>
           <GamePiece
             $color="scissors"
@@ -227,10 +228,10 @@ function Game({ score, setScore }) {
             id="2"
             onClick={activeGame}
           >
-            <span className="hide">scissors</span>
+            scissors
           </GamePiece>
           <GamePiece $color="rock" bg={rock} id="3" onClick={activeGame}>
-            <span className="hide">rock</span>
+            rock
           </GamePiece>
         </GameOuter>
       ) : (
