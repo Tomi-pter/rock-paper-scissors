@@ -16,6 +16,8 @@ const GamePiece = styled.button`
   background: url(${(props) => props.bg}) no-repeat center/3.5vw;
   background-color: white;
   color: transparent;
+  transform: ${(props) => (props.animate === true ? "scale(1)" : "scale(0)")};
+  transition: transform 1.5s ease-in-out;
 
   .hide {
     visibility: hidden;
@@ -134,6 +136,7 @@ function Game({ score, setScore }) {
   const [no, setNo] = useState(0);
   const [randomP, setRandomP] = useState([]);
   const [dispNum, setDispNum] = useState(0);
+  const [isAnimated, setIsAnimated] = useState(false);
   const colorRef = useRef("");
   const bgRef = useRef("");
   const scoreRef = useRef("");
@@ -153,6 +156,9 @@ function Game({ score, setScore }) {
     }));
     setRandomP(randomise(idArray[0], idArray[idArray.length - 1]));
     setActive(true);
+    setTimeout(() => {
+      setIsAnimated(true);
+    }, 500);
   };
 
   useEffect(() => {
@@ -205,6 +211,7 @@ function Game({ score, setScore }) {
 
   const playAgain = () => {
     setActive(false);
+    setIsAnimated(false);
     updateScore();
   };
 
@@ -219,7 +226,13 @@ function Game({ score, setScore }) {
     <>
       {!active ? (
         <GameOuter>
-          <GamePiece $color="paper" bg={paper} id="1" onClick={activeGame}>
+          <GamePiece
+            $color="paper"
+            bg={paper}
+            id="1"
+            onClick={activeGame}
+            animate={true}
+          >
             paper
           </GamePiece>
           <GamePiece
@@ -227,10 +240,17 @@ function Game({ score, setScore }) {
             bg={scissors}
             id="2"
             onClick={activeGame}
+            animate={true}
           >
             scissors
           </GamePiece>
-          <GamePiece $color="rock" bg={rock} id="3" onClick={activeGame}>
+          <GamePiece
+            $color="rock"
+            bg={rock}
+            id="3"
+            onClick={activeGame}
+            animate={true}
+          >
             rock
           </GamePiece>
         </GameOuter>
@@ -256,6 +276,7 @@ function Game({ score, setScore }) {
               id={randomP}
               $color={colorRef.current}
               bg={bgRef.current}
+              animate={isAnimated}
               disabled
             />
           </div>
