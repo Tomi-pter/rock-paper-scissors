@@ -17,7 +17,7 @@ const GamePiece = styled.button`
   background-color: white;
   color: transparent;
   transform: ${(props) => (props.animate === true ? "scale(1)" : "scale(0)")};
-  transition: transform 1.5s ease-in-out;
+  transition: transform 1s ease-in-out;
 
   .hide {
     visibility: hidden;
@@ -94,6 +94,11 @@ const GameOuterActive = styled.div`
     font-size: 3rem;
   }
 
+  & .result {
+    opacity: ${(props) => (props.animate === true ? "1" : "0")};
+    transition: opacity 500ms ease-in 1.5s;
+  }
+
   @media screen and (max-width: 1024px) {
     max-width: 80%;
     height: 30vh;
@@ -127,7 +132,7 @@ const OutcomeBtn = styled.button`
   }
 `;
 
-function Game({ score, setScore }) {
+function Game({ score, setScore, setScoreChange }) {
   const [active, setActive] = useState(false);
   const [selected, setSelected] = useState({
     class: "",
@@ -156,6 +161,7 @@ function Game({ score, setScore }) {
     }));
     setRandomP(randomise(idArray[0], idArray[idArray.length - 1]));
     setActive(true);
+    setScoreChange(!active);
     setTimeout(() => {
       setIsAnimated(true);
     }, 500);
@@ -193,13 +199,16 @@ function Game({ score, setScore }) {
     return result;
   };
 
-  if (scoreRef.current === "Stalemate") {
-    setScore(+dispNum);
-  } else if (scoreRef.current === "You win") {
-    setScore(+dispNum + 1);
-  } else if (scoreRef.current === "You lose") {
-    setScore(+dispNum - 1);
-  }
+  setTimeout(() => {
+    if (scoreRef.current === "Stalemate") {
+      setScore(+dispNum);
+    } else if (scoreRef.current === "You win") {
+      setScore(+dispNum + 1);
+    } else if (scoreRef.current === "You lose") {
+      setScore(+dispNum - 1);
+    }
+  }, 2500);
+
   useEffect(() => {
     totalRef.current = score;
   }, [score]);
@@ -211,16 +220,21 @@ function Game({ score, setScore }) {
 
   const playAgain = () => {
     setActive(false);
+    setScoreChange(!active);
     setIsAnimated(false);
     updateScore();
   };
 
-  useEffect(() => {
-    setTimeout(() => {
-      console.log("the house has picked");
-      console.log(score);
-    }, 0);
-  }, [randomP, selected.id, score]);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     console.log("the house has picked");
+  //     console.log(score);
+  //   }, 0);
+  // }, [randomP, selected.id, score]);
+
+  const solved = () => {
+    return (scoreRef.current = winner(+selected.id, no));
+  };
 
   return (
     <>
@@ -255,7 +269,7 @@ function Game({ score, setScore }) {
           </GamePiece>
         </GameOuter>
       ) : (
-        <GameOuterActive>
+        <GameOuterActive animate={isAnimated}>
           <div>
             <p>YOU PICKED</p>
             <button
@@ -265,7 +279,7 @@ function Game({ score, setScore }) {
             ></button>
           </div>
           <div className="outcome">
-            <p>{(scoreRef.current = winner(+selected.id, no))}</p>
+            <p className="result">{solved()}</p>
             <OutcomeBtn onClick={playAgain}>Play again</OutcomeBtn>
           </div>
           <div>

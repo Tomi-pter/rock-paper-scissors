@@ -1,3 +1,4 @@
+// import { useState, useEffect } from "react";
 import styled from "styled-components/macro";
 import gameLogo from "../images/logo.svg";
 
@@ -32,6 +33,8 @@ const ScoreCard = styled.div`
     color: var(--dark-text);
     font-size: 4rem;
     margin-top: -0.5rem;
+    /* opacity: ${(props) => (props.animate === true ? "1" : "0")};
+    transition: opacity 100ms ease-in; */
   }
   h1 {
     margin: 0;
@@ -47,13 +50,14 @@ const ScoreCard = styled.div`
   }
 `;
 
-function Score({ score }) {
+function Score({ score, scoreChange }) {
+  // console.log(scoreChange);
   return (
     <ScoreDiv>
       <div>
         <img src={gameLogo} alt="logo" />
       </div>
-      <ScoreCard>
+      <ScoreCard animate={scoreChange}>
         <h1>
           SCORE <span>{score}</span>
         </h1>

@@ -32,6 +32,7 @@ const ResetBtn = styled.button`
 
 function App() {
   const [score, setScore] = useState(0);
+  const [scoreChange, setScoreChange] = useState(false);
 
   const resetGame = () => {
     window.location.reload();
@@ -41,8 +42,8 @@ function App() {
   return (
     <>
       {/*<Heading>Single player Rock, Paper, Scissors game</Heading>*/}
-      <Score score={score} setScore={setScore} />
-      <Game score={score} setScore={setScore} />
+      <Score score={score} setScore={setScore} scoreChange={scoreChange} />
+      <Game score={score} setScore={setScore} setScoreChange={setScoreChange} />
       <ResetDiv>
         <ResetBtn onClick={resetGame}>Reset</ResetBtn>
       </ResetDiv>
