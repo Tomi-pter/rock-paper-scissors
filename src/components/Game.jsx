@@ -17,7 +17,7 @@ const GamePiece = styled.button`
   background-color: white;
   color: transparent;
   transform: ${(props) => (props.animate === true ? "scale(1)" : "scale(0)")};
-  transition: transform 1s ease-in-out;
+  transition: transform 1s ease-in-out, filter 1.5s ease-in 1.5s;
 
   .hide {
     visibility: hidden;
@@ -97,6 +97,38 @@ const GameOuterActive = styled.div`
   & .result {
     opacity: ${(props) => (props.animate === true ? "1" : "0")};
     transition: opacity 500ms ease-in 1.5s;
+  }
+
+  & .userDiv button {
+    /* filter: ${(props) =>
+      props.champ === "user"
+        ? "drop-shadow(0px 0px 10px rgba(159, 159, 251, 0.75)) drop-shadow(0px 0px 10px rgba(159, 159, 251, 0.5)) drop-shadow(0px 0px 10px rgba(159, 159, 251, 0.25))"
+        : "none"}; */
+    /* box-shadow: 5px 5px 0 rgba(159, 159, 251, 0.35),
+      -5px -5px 0 rgba(159, 159, 251, 0.35),
+      5px -5px 0 rgba(159, 159, 251, 0.35), -5px 5px 0 rgba(159, 159, 251, 0.35),
+      10px 10px 5px rgba(159, 159, 251, 0.25),
+      -10px -10px 5px rgba(159, 159, 251, 0.25),
+      10px -10px 5px rgba(159, 159, 251, 0.25),
+      -10px 10px 5px rgba(159, 159, 251, 0.25); */
+    filter: ${(props) =>
+      props.gameActive === true
+        ? (props) =>
+            props.champ === "user"
+              ? "drop-shadow(0px 0px 25px rgba(159, 159, 251, 0.75)) drop-shadow(0px 0px 50px rgba(159, 159, 251, 0.5)) drop-shadow(0px 0px 100px rgba(159, 159, 251, 0.25))"
+              : "none"
+        : "none"};
+    transition: filter 1.5s ease-in 1.5s;
+  }
+
+  & .theHouse {
+    filter: ${(props) =>
+      props.gameActive === true
+        ? (props) =>
+            props.champ === "house"
+              ? "drop-shadow(0px 0px 25px rgba(159, 159, 251, 0.75)) drop-shadow(0px 0px 50px rgba(159, 159, 251, 0.5)) drop-shadow(0px 0px 100px rgba(159, 159, 251, 0.25))"
+              : "none"
+        : "none"};
   }
 
   @media screen and (max-width: 1024px) {
@@ -196,7 +228,13 @@ function Game({ score, setScore, setScoreChange }) {
     } else {
       result = "You lose";
     }
-    return result;
+    let resultShadow =
+      result && result === "You win"
+        ? "user"
+        : result === "You lose"
+        ? "house"
+        : "draw";
+    return [result, resultShadow];
   };
 
   setTimeout(() => {
@@ -233,8 +271,11 @@ function Game({ score, setScore, setScoreChange }) {
   // }, [randomP, selected.id, score]);
 
   const solved = () => {
-    return (scoreRef.current = winner(+selected.id, no));
+    return (scoreRef.current = winner(+selected.id, no)[0]);
   };
+
+  let champion = winner(+selected.id, no)[1];
+  console.log(champion);
 
   return (
     <>
@@ -269,8 +310,12 @@ function Game({ score, setScore, setScoreChange }) {
           </GamePiece>
         </GameOuter>
       ) : (
-        <GameOuterActive animate={isAnimated}>
-          <div>
+        <GameOuterActive
+          animate={isAnimated}
+          champ={champion}
+          gameActive={isAnimated}
+        >
+          <div className="userDiv">
             <p>YOU PICKED</p>
             <button
               className={selected.class}
