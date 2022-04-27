@@ -212,6 +212,13 @@ const OutcomeBtn = styled.button`
   border-radius: 0.25rem;
   font-family: "BB";
   border: 1px solid white;
+  box-shadow: 2px 2px 2.5px rgba(0, 0, 0, 0.25);
+  transition: transform 250ms, color 250ms;
+
+  :hover {
+    color: rgba(255, 0, 0, 0.5);
+    transform: translateY(2px);
+  }
 
   @media screen and (max-width: 1024px) {
     padding: 0.5rem 2rem;
