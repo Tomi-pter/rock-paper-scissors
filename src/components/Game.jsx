@@ -17,7 +17,7 @@ const GamePiece = styled.button`
   background-color: white;
   color: transparent;
   transform: ${(props) => (props.animate === true ? "scale(1)" : "scale(0)")};
-  transition: transform 1s ease-in-out, filter 1.5s ease-in 1.5s;
+  transition: transform 1s ease-in-out;
 
   .hide {
     visibility: hidden;
@@ -99,36 +99,86 @@ const GameOuterActive = styled.div`
     transition: opacity 500ms ease-in 1.5s;
   }
 
-  & .userDiv button {
+  /* & .userDiv button {
     /* filter: ${(props) =>
-      props.champ === "user"
-        ? "drop-shadow(0px 0px 10px rgba(159, 159, 251, 0.75)) drop-shadow(0px 0px 10px rgba(159, 159, 251, 0.5)) drop-shadow(0px 0px 10px rgba(159, 159, 251, 0.25))"
-        : "none"}; */
-    /* box-shadow: 5px 5px 0 rgba(159, 159, 251, 0.35),
+    props.champ === "user"
+      ? "drop-shadow(0px 0px 10px rgba(159, 159, 251, 0.75)) drop-shadow(0px 0px 10px rgba(159, 159, 251, 0.5)) drop-shadow(0px 0px 10px rgba(159, 159, 251, 0.25))"
+      : "none"}; */
+  /* box-shadow: 5px 5px 0 rgba(159, 159, 251, 0.35),
       -5px -5px 0 rgba(159, 159, 251, 0.35),
       5px -5px 0 rgba(159, 159, 251, 0.35), -5px 5px 0 rgba(159, 159, 251, 0.35),
       10px 10px 5px rgba(159, 159, 251, 0.25),
       -10px -10px 5px rgba(159, 159, 251, 0.25),
       10px -10px 5px rgba(159, 159, 251, 0.25),
       -10px 10px 5px rgba(159, 159, 251, 0.25); */
-    filter: ${(props) =>
-      props.gameActive === true
-        ? (props) =>
-            props.champ === "user"
-              ? "drop-shadow(0px 0px 25px rgba(159, 159, 251, 0.75)) drop-shadow(0px 0px 50px rgba(159, 159, 251, 0.5)) drop-shadow(0px 0px 100px rgba(159, 159, 251, 0.25))"
-              : "none"
-        : "none"};
+  /* filter: ${(props) =>
+    props.gameActive === true
+      ? (props) =>
+          props.champ === "user"
+            ? "drop-shadow(0px 0px 25px rgba(159, 159, 251, 0.75)) drop-shadow(0px 0px 50px rgba(159, 159, 251, 0.5)) drop-shadow(0px 0px 100px rgba(159, 159, 251, 0.25))"
+            : "none"
+      : "none"};
     transition: filter 1.5s ease-in 1.5s;
+  } */
+
+  & .userDiv button {
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.1);
+      animation: ${(props) =>
+        props.gameActive === true
+          ? (props) => (props.champ === "user" ? "declareWinner 1.5s" : "none")
+          : "none"};
+      animation-fill-mode: forwards;
+      animation-delay: 1.5s;
+    }
   }
 
   & .theHouse {
-    filter: ${(props) =>
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.1);
+      animation: ${(props) =>
+        props.gameActive === true
+          ? (props) => (props.champ === "house" ? "declareWinner 1.5s" : "none")
+          : "none"};
+      animation-fill-mode: forwards;
+      animation-delay: 1.5s;
+    }
+    /* filter: ${(props) =>
       props.gameActive === true
         ? (props) =>
             props.champ === "house"
               ? "drop-shadow(0px 0px 25px rgba(159, 159, 251, 0.75)) drop-shadow(0px 0px 50px rgba(159, 159, 251, 0.5)) drop-shadow(0px 0px 100px rgba(159, 159, 251, 0.25))"
               : "none"
-        : "none"};
+        : "none"}; */
+  }
+
+  @keyframes declareWinner {
+    33% {
+      box-shadow: 0 6px 0 60px rgba(255, 255, 255, 0.025);
+    }
+    66% {
+      box-shadow: 0 6px 0 60px rgba(255, 255, 255, 0.025),
+        0 6px 0 calc((60px) * 2 + 5px) rgba(255, 255, 255, 0.025);
+    }
+    100% {
+      box-shadow: 0 6px 0 60px rgba(255, 255, 255, 0.025),
+        0 6px 0 calc((60px) * 2 + 5px) rgba(255, 255, 255, 0.025),
+        0 6px 0 calc((60px) * 3 + 25px) rgba(255, 255, 255, 0.025);
+    }
   }
 
   @media screen and (max-width: 1024px) {
