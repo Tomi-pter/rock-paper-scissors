@@ -94,7 +94,7 @@ const GameOuterActive = styled.div`
     font-size: 3rem;
   }
 
-  & .result {
+  & .outcome {
     opacity: ${(props) => (props.animate === true ? "1" : "0")};
     transition: opacity 500ms ease-in 1.5s;
   }
@@ -196,6 +196,10 @@ const GameOuterActive = styled.div`
     & .outcome > p {
       font-size: 1rem;
     }
+
+    & .houseContainer {
+      margin-top: -1rem;
+    }
   }
 `;
 
@@ -210,7 +214,8 @@ const OutcomeBtn = styled.button`
   border: 1px solid white;
 
   @media screen and (max-width: 1024px) {
-    width: 100%;
+    padding: 0.5rem 2rem;
+    margin: 0.5rem;
   }
 `;
 
@@ -377,7 +382,7 @@ function Game({ score, setScore, setScoreChange }) {
             <p className="result">{solved()}</p>
             <OutcomeBtn onClick={playAgain}>Play again</OutcomeBtn>
           </div>
-          <div>
+          <div className="houseContainer">
             <p>THE HOUSE PICKED</p>
             <GamePiece
               ref={colorRef}
