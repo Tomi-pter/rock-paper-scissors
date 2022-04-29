@@ -47,10 +47,6 @@ const GameOuter = styled.div`
       clamp(20vh, 25vh, 29vh);
   }
 
-  //@media screen and (min-width: 451px) and (max-width: 1024px) {
-  //  background: url(${triangle}) no-repeat center/40vw clamp(25vh, 30vh, 33vh);
-  //}
-
   ${GamePiece}:first-child {
     position: absolute;
     top: 0;
@@ -99,28 +95,6 @@ const GameOuterActive = styled.div`
     transition: opacity 500ms ease-in 1.5s;
   }
 
-  /* & .userDiv button {
-    /* filter: ${(props) =>
-    props.champ === "user"
-      ? "drop-shadow(0px 0px 10px rgba(159, 159, 251, 0.75)) drop-shadow(0px 0px 10px rgba(159, 159, 251, 0.5)) drop-shadow(0px 0px 10px rgba(159, 159, 251, 0.25))"
-      : "none"}; */
-  /* box-shadow: 5px 5px 0 rgba(159, 159, 251, 0.35),
-      -5px -5px 0 rgba(159, 159, 251, 0.35),
-      5px -5px 0 rgba(159, 159, 251, 0.35), -5px 5px 0 rgba(159, 159, 251, 0.35),
-      10px 10px 5px rgba(159, 159, 251, 0.25),
-      -10px -10px 5px rgba(159, 159, 251, 0.25),
-      10px -10px 5px rgba(159, 159, 251, 0.25),
-      -10px 10px 5px rgba(159, 159, 251, 0.25); */
-  /* filter: ${(props) =>
-    props.gameActive === true
-      ? (props) =>
-          props.champ === "user"
-            ? "drop-shadow(0px 0px 25px rgba(159, 159, 251, 0.75)) drop-shadow(0px 0px 50px rgba(159, 159, 251, 0.5)) drop-shadow(0px 0px 100px rgba(159, 159, 251, 0.25))"
-            : "none"
-      : "none"};
-    transition: filter 1.5s ease-in 1.5s;
-  } */
-
   & .userDiv button {
     &::before {
       content: "";
@@ -157,13 +131,6 @@ const GameOuterActive = styled.div`
       animation-fill-mode: forwards;
       animation-delay: 1.5s;
     }
-    /* filter: ${(props) =>
-      props.gameActive === true
-        ? (props) =>
-            props.champ === "house"
-              ? "drop-shadow(0px 0px 25px rgba(159, 159, 251, 0.75)) drop-shadow(0px 0px 50px rgba(159, 159, 251, 0.5)) drop-shadow(0px 0px 100px rgba(159, 159, 251, 0.25))"
-              : "none"
-        : "none"}; */
   }
 
   @keyframes declareWinner {
