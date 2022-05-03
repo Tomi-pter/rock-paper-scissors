@@ -4,8 +4,10 @@ import rock from "../images/icon-rock.svg";
 import paper from "../images/icon-paper.svg";
 import scissors from "../images/icon-scissors.svg";
 import triangle from "../images/bg-triangle.svg";
+import lizard from "../images/icon-lizard.svg";
+import spock from "../images/icon-spock.svg";
 import Toggle from "./Toggle";
-import Bonus from "./Bonus";
+import { BonusOuter } from "./Bonus";
 
 const GamePiece = styled.button`
   padding: 1.5rem;
@@ -217,6 +219,7 @@ function Game({ score, setScore, setScoreChange }) {
   const totalRef = useRef("");
 
   let idArray = [1, 2, 3];
+  let idArrayBonus = [1, 2, 3, 4, 5];
 
   const randomise = (a, b) => {
     return Math.floor(Math.random() * (b - a + 1) + a);
@@ -228,7 +231,14 @@ function Game({ score, setScore, setScoreChange }) {
       class: e.target.className,
       id: e.target.id,
     }));
-    setRandomP(randomise(idArray[0], idArray[idArray.length - 1]));
+
+    if (selectedMode) {
+      setRandomP(
+        randomise(idArrayBonus[0], idArrayBonus[idArrayBonus.length - 1])
+      );
+    } else {
+      setRandomP(randomise(idArray[0], idArray[idArray.length - 1]));
+    }
     setActive(true);
     setScoreChange(!active);
     setTimeout(() => {
@@ -249,21 +259,59 @@ function Game({ score, setScore, setScoreChange }) {
       colorRef.current = "rock";
       bgRef.current = rock;
       setNo(3);
+    } else if (randomP === 4) {
+      colorRef.current = "lizard";
+      bgRef.current = lizard;
+      setNo(4);
+    } else if (randomP === 5) {
+      colorRef.current = "spock";
+      bgRef.current = spock;
+      setNo(5);
     }
   }, [no, randomP, active]);
 
   const winner = (select, rId) => {
     let result;
-    if (!rId) {
-      result = "the house is picking...";
-    } else if (select - 1 === rId) {
-      result = "You win";
-    } else if (select - 1 === rId - 1) {
-      result = "Stalemate";
-    } else if (select === 1 && rId === 3) {
-      result = "You win";
+    // console.log(select);
+    // console.log(rId);
+    if (selectedMode) {
+      if (!rId) {
+        result = "the house is picking...";
+      } else if (
+        (select === 1 && (rId === 3 || rId === 5)) ||
+        (select === 2 && (rId === 1 || rId === 4)) ||
+        (select === 3 && (rId === 2 || rId === 4)) ||
+        (select === 4 && (rId === 1 || rId === 5)) ||
+        (select === 5 && (rId === 2 || rId === 3))
+      ) {
+        result = "You win";
+      } else if (select === rId) {
+        result = "Stalemate";
+      } else if (
+        (select === 1 && (rId === 2 || 4)) ||
+        (select === 2 && (rId === 3 || 5)) ||
+        (select === 3 && (rId === 1 || 5)) ||
+        (select === 4 && (rId === 2 || 3)) ||
+        (select === 5 && (rId === 1 || 4))
+      ) {
+        result = "You lose";
+      } else {
+        result = "You lose";
+      }
     } else {
-      result = "You lose";
+      if (!rId) {
+        result = "the house is picking...";
+      } else if (
+        (select === 1 && rId === 3) ||
+        (select === 2 && rId === 1) ||
+        (select === 3 && rId === 2)
+      ) {
+        result = "You win";
+      } else if (select === rId) {
+        result = "Stalemate";
+      } else {
+        result = "You lose";
+      }
     }
     let resultShadow =
       result && result === "You win"
@@ -305,46 +353,99 @@ function Game({ score, setScore, setScoreChange }) {
   };
 
   let champion = winner(+selected.id, no)[1];
-  console.log(champion);
+  // console.log(champion);
   // console.log(selectedMode);
 
   return (
     <>
-      <Toggle setSelectedMode={setSelectedMode} />
+      <Toggle setSelectedMode={setSelectedMode} active={active} />
       {!active ? (
-        !selectedMode ? (
-          <GameOuter>
-            <GamePiece
-              $color="paper"
-              bg={paper}
-              id="1"
-              onClick={activeGame}
-              animate={true}
-            >
-              paper
-            </GamePiece>
-            <GamePiece
-              $color="scissors"
-              bg={scissors}
-              id="2"
-              onClick={activeGame}
-              animate={true}
-            >
-              scissors
-            </GamePiece>
-            <GamePiece
-              $color="rock"
-              bg={rock}
-              id="3"
-              onClick={activeGame}
-              animate={true}
-            >
-              rock
-            </GamePiece>
-          </GameOuter>
-        ) : (
-          <Bonus />
-        )
+        <>
+          {!selectedMode ? (
+            <GameOuter>
+              <GamePiece
+                $color="paper"
+                bg={paper}
+                id="1"
+                onClick={activeGame}
+                animate={true}
+              >
+                paper
+              </GamePiece>
+              <GamePiece
+                $color="scissors"
+                bg={scissors}
+                id="2"
+                onClick={activeGame}
+                animate={true}
+              >
+                scissors
+              </GamePiece>
+              <GamePiece
+                $color="rock"
+                bg={rock}
+                id="3"
+                onClick={activeGame}
+                animate={true}
+              >
+                rock
+              </GamePiece>
+            </GameOuter>
+          ) : (
+            <BonusOuter>
+              <GamePiece
+                $color="scissors"
+                bg={scissors}
+                id="2"
+                animate={true}
+                className="scissors"
+                onClick={activeGame}
+              >
+                scissors
+              </GamePiece>
+              <GamePiece
+                $color="paper"
+                bg={paper}
+                id="1"
+                animate={true}
+                className="paper"
+                onClick={activeGame}
+              >
+                paper
+              </GamePiece>
+              <GamePiece
+                $color="rock"
+                bg={rock}
+                id="3"
+                animate={true}
+                className="rock"
+                onClick={activeGame}
+              >
+                rock
+              </GamePiece>
+              <GamePiece
+                $color="lizard"
+                bg={lizard}
+                id="4"
+                animate={true}
+                className="lizard"
+                onClick={activeGame}
+              >
+                lizard
+              </GamePiece>
+              <GamePiece
+                $color="spock"
+                bg={spock}
+                id="5"
+                animate={true}
+                className="spock"
+                onClick={activeGame}
+              >
+                spock
+              </GamePiece>
+            </BonusOuter>
+          )}
+        </>
       ) : (
         <GameOuterActive
           animate={isAnimated}

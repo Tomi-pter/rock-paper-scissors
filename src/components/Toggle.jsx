@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components/macro";
 
 const Switch = styled.div`
@@ -61,9 +61,11 @@ const Switch = styled.div`
 const SwitchContainer = styled.section`
   color: whitesmoke;
   font-family: "Courier New", Courier, monospace;
+  text-align: center;
+  display: ${(props) => (props.active === true ? "none" : "unset")};
 `;
 
-function Toggle({ setSelectedMode }) {
+function Toggle({ setSelectedMode, active }) {
   const [mode, setMode] = useState({
     bonus: false,
     className: "",
@@ -89,20 +91,22 @@ function Toggle({ setSelectedMode }) {
     }));
   }
 
-  setSelectedMode(mode.bonus);
+  useEffect(() => {
+    setSelectedMode(mode.bonus);
+  }, [mode, setSelectedMode]);
 
   return (
-    <SwitchContainer>
+    <SwitchContainer active={active}>
       <h1>Game Mode</h1>
       <div className="check-frame">
-        <label htmlFor="pricing" className="annual-label" onClick={bonusTrue}>
+        <label htmlFor="gameMode" onClick={bonusTrue}>
           Classic
         </label>
         <Switch>
           <input
             type="checkbox"
-            name="pricing"
-            id="pricing"
+            name="gameMode"
+            id="gameMode"
             className={mode.className}
             onClick={updateMode}
             onKeyUp={(e) => {
@@ -111,7 +115,7 @@ function Toggle({ setSelectedMode }) {
           />
           <span className="slider" onClick={updateMode}></span>
         </Switch>
-        <label htmlFor="pricing" className="month-label" onClick={bonusFalse}>
+        <label htmlFor="gameMode" onClick={bonusFalse}>
           Bonus
         </label>
       </div>

@@ -78,52 +78,57 @@ const BonusOuter = styled.div`
   }
 `;
 
-function Bonus() {
+function Bonus({ activeGame }) {
   return (
     <>
       <BonusOuter>
         <GamePiece
           $color="scissors"
           bg={scissors}
-          id=""
+          id="2"
           animate={true}
           className="scissors"
+          onClick={activeGame}
         >
           scissors
         </GamePiece>
         <GamePiece
           $color="paper"
           bg={paper}
-          id=""
+          id="1"
           animate={true}
           className="paper"
+          onClick={activeGame}
         >
           paper
         </GamePiece>
         <GamePiece
           $color="rock"
           bg={rock}
-          id=""
+          id="3"
           animate={true}
           className="rock"
+          onClick={activeGame}
         >
           rock
         </GamePiece>
         <GamePiece
           $color="lizard"
           bg={lizard}
-          id=""
+          id="4"
           animate={true}
           className="lizard"
+          onClick={activeGame}
         >
           lizard
         </GamePiece>
         <GamePiece
           $color="spock"
           bg={spock}
-          id=""
+          id="5"
           animate={true}
           className="spock"
+          onClick={activeGame}
         >
           spock
         </GamePiece>
@@ -133,3 +138,4 @@ function Bonus() {
 }
 
 export default Bonus;
+export { BonusOuter };

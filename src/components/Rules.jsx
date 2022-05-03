@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import rules from "../images/image-rules.svg";
+import bonusRules from "../images/image-rules-bonus.svg";
 import closeBtn from "../images/icon-close.svg";
 import { useState } from "react";
 
@@ -70,7 +71,7 @@ const RulesImg = styled.div`
 const Dim = styled.div`
   background-color: rgb(0, 0, 0, 0.75);
   width: 100vw;
-  height: 200vh;
+  height: 300vh;
   z-index: 10;
   transform: translateX(1%) translateY(-55%);
   position: fixed;
@@ -113,6 +114,15 @@ function Rules() {
               </button>
             </div>
             <img src={rules} alt="" />
+          </RulesImg>
+          <RulesImg>
+            <div className="headClose">
+              <h1>RULES</h1>
+              <button onClick={removeRule}>
+                <img src={closeBtn} alt="close" />
+              </button>
+            </div>
+            <img src={bonusRules} alt="" />
           </RulesImg>
           <Dim />
         </>
