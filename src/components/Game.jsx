@@ -9,6 +9,7 @@ import spock from "../images/icon-spock.svg";
 import Toggle from "./Toggle";
 import { BonusOuter } from "./Bonus";
 
+// styled components
 const GamePiece = styled.button`
   padding: 1.5rem;
   width: 9vw;
@@ -142,6 +143,7 @@ const GameOuterActive = styled.div`
     }
   }
 
+  /* ripple effect animation */
   @keyframes declareWinner {
     33% {
       box-shadow: 0 6px 0 60px rgba(255, 255, 255, 0.025);
@@ -221,10 +223,12 @@ function Game({ score, setScore, setScoreChange }) {
   let idArray = [1, 2, 3];
   let idArrayBonus = [1, 2, 3, 4, 5];
 
+  // Randomise function
   const randomise = (a, b) => {
     return Math.floor(Math.random() * (b - a + 1) + a);
   };
 
+  // Function to put the game into active mode and select the move of the house
   const activeGame = (e) => {
     setSelected((prevState) => ({
       ...prevState,
@@ -246,6 +250,7 @@ function Game({ score, setScore, setScoreChange }) {
     }, 500);
   };
 
+  // sets styling for the house
   useEffect(() => {
     if (randomP === 1) {
       colorRef.current = "paper";
@@ -270,10 +275,9 @@ function Game({ score, setScore, setScoreChange }) {
     }
   }, [no, randomP, active]);
 
+  // function to decide winner of the contest
   const winner = (select, rId) => {
     let result;
-    // console.log(select);
-    // console.log(rId);
     if (selectedMode) {
       if (!rId) {
         result = "the house is picking...";
@@ -322,6 +326,7 @@ function Game({ score, setScore, setScoreChange }) {
     return [result, resultShadow];
   };
 
+  // communicates result with user
   setTimeout(() => {
     if (scoreRef.current === "Stalemate") {
       setScore(+dispNum);
@@ -341,6 +346,7 @@ function Game({ score, setScore, setScoreChange }) {
     scoreRef.current = "";
   };
 
+  // play again function
   const playAgain = () => {
     setActive(false);
     setScoreChange(!active);
@@ -353,8 +359,6 @@ function Game({ score, setScore, setScoreChange }) {
   };
 
   let champion = winner(+selected.id, no)[1];
-  // console.log(champion);
-  // console.log(selectedMode);
 
   return (
     <>

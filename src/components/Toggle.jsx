@@ -71,6 +71,7 @@ function Toggle({ setSelectedMode, active }) {
     className: "",
   });
 
+  // toggle function
   function updateMode() {
     !mode.bonus ? bonusTrue() : bonusFalse();
   }
